@@ -15,7 +15,9 @@
 # limitations under the License.
 #
 
-$(call inherit-product, vendor/haier/g151/g151-vendor.mk)
+$(call inherit-product, vendor/kido/k2/k2-vendor.mk)
+
+$(call inherit-product, frameworks/native/build/phone-hdpi-512-dalvik-heap.mk)
 
 # Overlay
 DEVICE_PACKAGE_OVERLAYS += \
@@ -28,17 +30,17 @@ PRODUCT_AAPT_PREF_CONFIG := hdpi
 
 # Audio
 PRODUCT_COPY_FILES += \
-    $(LOCAL_PATH)/audio/acdb/QRD_Bluetooth_cal.acdb:system/etc/acdbdata/QRD/QRD_Bluetooth_cal.acdb \
-    $(LOCAL_PATH)/audio/acdb/QRD_General_cal.acdb:system/etc/acdbdata/QRD/QRD_General_cal.acdb \
-    $(LOCAL_PATH)/audio/acdb/QRD_Global_cal.acdb:system/etc/acdbdata/QRD/QRD_Global_cal.acdb \
-    $(LOCAL_PATH)/audio/acdb/QRD_Handset_cal.acdb:system/etc/acdbdata/QRD/QRD_Handset_cal.acdb \
-    $(LOCAL_PATH)/audio/acdb/QRD_Hdmi_cal.acdb:system/etc/acdbdata/QRD/QRD_Hdmi_cal.acdb \
-    $(LOCAL_PATH)/audio/acdb/QRD_Headset_cal.acdb:system/etc/acdbdata/QRD/QRD_Headset_cal.acdb \
-    $(LOCAL_PATH)/audio/acdb/QRD_Speaker_cal.acdb:system/etc/acdbdata/QRD/QRD_Speaker_cal.acdb \
+    $(LOCAL_PATH)/audio/acdb/Bluetooth_cal.acdb:system/etc/acdbdata/QRD/Qluetooth_cal.acdb \
+    $(LOCAL_PATH)/audio/acdb/General_cal.acdb:system/etc/acdbdata/QRD/General_cal.acdb \
+    $(LOCAL_PATH)/audio/acdb/Global_cal.acdb:system/etc/acdbdata/QRD/Global_cal.acdb \
+    $(LOCAL_PATH)/audio/acdb/Handset_cal.acdb:system/etc/acdbdata/QRD/Handset_cal.acdb \
+    $(LOCAL_PATH)/audio/acdb/Hdmi_cal.acdb:system/etc/acdbdata/QRD/Hdmi_cal.acdb \
+    $(LOCAL_PATH)/audio/acdb/Headset_cal.acdb:system/etc/acdbdata/QRD/Headset_cal.acdb \
+    $(LOCAL_PATH)/audio/acdb/Speaker_cal.acdb:system/etc/acdbdata/QRD/Speaker_cal.acdb \
     $(LOCAL_PATH)/audio/audio_platform_info.xml:$(TARGET_COPY_OUT_VENDOR)/etc/audio_platform_info.xml \
     $(LOCAL_PATH)/audio/audio_policy_configuration.xml:$(TARGET_COPY_OUT_VENDOR)/etc/audio_policy_configuration.xml \
     $(LOCAL_PATH)/audio/mixer_paths.xml:$(TARGET_COPY_OUT_VENDOR)/etc/mixer_paths.xml \
-    $(LOCAL_PATH)/audio/mixer_paths_msm8909_x20_g151_pm8916.xml:$(TARGET_COPY_OUT_VENDOR)/etc/mixer_paths_msm8909_x20_g151_pm8916.xml \
+    $(LOCAL_PATH)/audio/mixer_paths_msm8909_pm8916.xml:$(TARGET_COPY_OUT_VENDOR)/etc/mixer_paths_msm8909_pm8916.xml \
     $(LOCAL_PATH)/audio/mixer_paths_skuc.xml:$(TARGET_COPY_OUT_VENDOR)/etc/mixer_paths_skuc.xml
 
 PRODUCT_COPY_FILES += \
@@ -48,21 +50,20 @@ PRODUCT_COPY_FILES += \
     frameworks/av/services/audiopolicy/config/r_submix_audio_policy_configuration.xml:$(TARGET_COPY_OUT_VENDOR)/etc/r_submix_audio_policy_configuration.xml \
     frameworks/av/services/audiopolicy/config/usb_audio_policy_configuration.xml:$(TARGET_COPY_OUT_VENDOR)/etc/usb_audio_policy_configuration.xml
 
-# Boot animation
-TARGET_SCREEN_HEIGHT := 800
-TARGET_SCREEN_WIDTH := 480
-TARGET_BOOTANIMATION_HALF_RES := true
-
 # Camera
 PRODUCT_PACKAGES += \
     camera.msm8909 \
     libmm-qcamera \
-    libshim_camera \
-    Snap
+    libshim_camera
+# No Snap app
 
 PRODUCT_PACKAGES += \
     android.hardware.camera.provider@2.4-impl \
     camera.device@1.0-impl
+
+# Display & Boot animation
+TARGET_SCREEN_HEIGHT := 360
+TARGET_SCREEN_WIDTH := 360
 
 # For android_filesystem_config.h
 PRODUCT_PACKAGES += \
@@ -86,7 +87,8 @@ PRODUCT_PACKAGES += \
 # Keylayout
 PRODUCT_COPY_FILES += \
     $(LOCAL_PATH)/keylayout/ft5x06_ts.kl:$(TARGET_COPY_OUT_VENDOR)/usr/keylayout/ft5x06_ts.kl \
-    $(LOCAL_PATH)/keylayout/gpio-keys.kl:$(TARGET_COPY_OUT_VENDOR)/usr/keylayout/gpio-keys.kl
+    $(LOCAL_PATH)/keylayout/gpio-keys.kl:$(TARGET_COPY_OUT_VENDOR)/usr/keylayout/gpio-keys.kl \
+    $(LOCAL_PATH)/keylayout/qpnp_pon.kl:$(TARGET_COPY_OUT_VENDOR)/usr/keylayout/qpnp_pon.kl
 
 # Lights
 PRODUCT_PACKAGES += \
@@ -112,9 +114,102 @@ PRODUCT_COPY_FILES += \
     frameworks/native/data/etc/android.hardware.usb.host.xml:$(TARGET_COPY_OUT_VENDOR)/etc/permissions/android.hardware.usb.host.xml \
     frameworks/native/data/etc/handheld_core_hardware.xml:$(TARGET_COPY_OUT_VENDOR)/etc/permissions/handheld_core_hardware.xml
 
-# Recorder
-PRODUCT_PACKAGES += \
-    Recorder
+# Screen density & Display props
+PRODUCT_PROPERTY_OVERRIDES += \
+    ro.sf.lcd_density=160 \
+    persist.graphics.vulkan.disable=true \
+    debug.hwui.use_buffer_age=false \
+    debug.sf.disable_backpressure=1 \
+    debug.sf.latch_unsignaled=1
+
+# Audio Properties
+PRODUCT_PROPERTY_OVERRIDES += \
+    ro.vendor.audio.sdk.fluencetype=none \
+    persist.vendor.audio.fluence.voicecall=true \
+    persist.vendor.audio.fluence.voicerec=true \
+    persist.vendor.audio.fluence.speaker=false \
+    vendor.audio.offload_wakelock=false \
+    persist.debug.wfd.enable=1 \
+    persist.sys.wfd.virtual=1 \
+    audio.deep_buffer.media=true \
+    audio.offload.min.duration.secs=30 \
+    audio.offload.video=true \
+    ro.af.client_heap_size_kbyte=7168 \
+    ro.audio.flinger_standbytime_ms=300 \
+    vendor.voice.path.for.pcm.voip=true \
+    vendor.audio.av.streaming.offload.enable=true \
+    vendor.audio.offload.buffer.size.kb=64 \
+    ro.config.vc_call_vol_steps=7 \
+    ro.config.media_vol_steps=25 \
+    persist.bluetooth.bluetooth_audio_hal.disabled=true \
+    vendor.audio.offload.gapless.enabled=true
+
+# ART & Optimization
+PRODUCT_ALWAYS_PREOPT_EXTRACTED_APK := true
+PRODUCT_USE_PROFILE_FOR_BOOT_IMAGE := true
+PRODUCT_DEX_PREOPT_BOOT_IMAGE_PROFILE_LOCATION := $(LOCAL_PATH)/profiles/boot.prof.txt
+PRODUCT_MINIMIZE_JAVA_DEBUG_INFO := true
+PRODUCT_ART_TARGET_INCLUDE_DEBUG_BUILD := false
+PRODUCT_DISABLE_SCUDO := true
+
+PRODUCT_PROPERTY_OVERRIDES += \
+    persist.device_config.runtime_native.usap_pool_enabled=true \
+    dalvik.vm.zygotemaxfailedboots=5 \
+    dalvik.vm.foreground-heap-growth-multiplier=2.0 \
+    dalvik.vm.dex2oat-flags=--no-watch-dog \
+    dalvik.vm.dex2oat-swap=false \
+    dalvik.vm.dex2oat-threads=2 \
+    dalvik.vm.dex2oat-cpu-set=0,1 \
+    dalvik.vm.madvise-random=true \
+    ro.vendor.qti.am.reschedule_service=true \
+    dalvik.vm.isa.arm.features=div \
+    persist.sys.dalvik.vm.lib.2=libart.so \
+    dalvik.vm.systemservercompilerfilter=speed-profile \
+    dalvik.vm.bg-dex2oat-compiler-filter=speed-profile \
+    dalvik.vm.boot-dex2oat-compiler-filter=verify \
+    dalvik.vm.minidebuginfo=false \
+    dalvik.vm.dex2oat-minidebuginfo=false
+
+PRODUCT_PROPERTY_OVERRIDES += \
+    ro.config.low_ram=true \
+    ro.config.small_battery=true \
+    ro.config.max_starting_bg=2
+
+#
+PRODUCT_PROPERTY_OVERRIDES += \
+    ro.vendor.qti.config.ulmk_memcg=false \
+    ro.vendor.qti.sys.fw.bservice_enable=true \
+    ro.vendor.qti.sys.fw.bservice_limit=3 \
+    ro.vendor.qti.sys.fw.bservice_age=3000 \
+    ro.vendor.qti.sys.fw.use_trim_settings=true \
+    ro.vendor.qti.sys.fw.empty_app_percent=50 \
+    ro.vendor.qti.sys.fw.trim_empty_percent=100 \
+    ro.vendor.qti.sys.fw.trim_cache_percent=100
+
+# HWUI Memory Caches (Scaled down for 360x360 screen)
+PRODUCT_PROPERTY_OVERRIDES += \
+    ro.hwui.texture_cache_size=8 \
+    ro.hwui.layer_cache_size=16 \
+    ro.hwui.r_buffer_cache_size=2 \
+    ro.hwui.path_cache_size=4 \
+    ro.hwui.gradient_cache_size=0.5 \
+    ro.hwui.drop_shadow_cache_size=2 \
+    ro.hwui.fbo_cache_size=0 \
+    ro.hwui.text_small_cache_width=1024 \
+    ro.hwui.text_small_cache_height=512 \
+    ro.hwui.text_large_cache_width=2048 \
+    ro.hwui.text_large_cache_height=1024
+
+# Improve scrolling
+PRODUCT_PROPERTY_OVERRIDES += \
+    persist.sys.scrollingcache=0 \
+    ro.min.fling_velocity=160 \
+    ro.max.fling_velocity=20000
+
+# Boot & Shutdown
+PRODUCT_PROPERTY_OVERRIDES += \
+    sys.vendor.shutdown.waittime=500 \
+    ro.build.shutdown_timeout=0
 
 # Sensor HAL
 PRODUCT_PACKAGES += \
@@ -122,16 +217,13 @@ PRODUCT_PACKAGES += \
     calmodule.cfg \
     libcalmodule_memsic \
     sensors.msm8909 \
-    sensors.g151
+    sensors.k2
 
 PRODUCT_COPY_FILES += \
     $(LOCAL_PATH)/configs/sensors/_hals.conf:$(TARGET_COPY_OUT_VENDOR)/etc/sensors/_hals.conf
 
-# Shipping API level (for CTS backward compatibility)
-PRODUCT_SHIPPING_API_LEVEL := 19
-
 # System Properties
-$(call inherit-product, device/haier/g151/system_prop.mk)
+$(call inherit-product, device/kido/k2/system_prop.mk)
 
 PRODUCT_COPY_FILES += \
     $(LOCAL_PATH)/configs/qti_whitelist.xml:system/etc/sysconfig/qti_whitelist.xml

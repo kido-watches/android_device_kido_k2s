@@ -4,7 +4,7 @@
     "target_path": "device/cyanogen/msm8909-common"
   },
   {
-    "repository": "android_kernel_cyanogen_msm8909",
-    "target_path": "kernel/cyanogen/msm8909"
+    "repository": "android_kernel_kido_msm8909",
+    "target_path": "kernel/kido/msm8909"
   }
 ]

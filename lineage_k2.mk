@@ -13,7 +13,15 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-$(call inherit-product, device/haier/g151/full_g151.mk)
+WITH_ADB_INSECURE := true
+
+$(call inherit-product, device/kido/k2/full_k2.mk)
+
+# Inherit common Android Go defaults.
+$(call inherit-product, build/make/target/product/go_defaults_512.mk)
+
+# Device was launched with L
+$(call inherit-product, $(SRC_TARGET_DIR)/product/product_launched_with_l.mk)
 
 # Inherit some common LineageOS stuff.
 $(call inherit-product, vendor/lineage/config/common_mini_phone.mk)
@@ -22,16 +30,16 @@ $(call inherit-product, vendor/lineage/config/common_mini_phone.mk)
 TARGET_BOARD_PLATFORM_VARIANT := msm8909
 
 # Assert
-TARGET_OTA_ASSERT_DEVICE := A16C3H, g151
+TARGET_OTA_ASSERT_DEVICE := kiic,kiis,k2,k2s,k2c
 
-PRODUCT_NAME := lineage_g151
-BOARD_VENDOR := haier
-PRODUCT_DEVICE := g151
+PRODUCT_NAME := lineage_k2
+BOARD_VENDOR := kido
+PRODUCT_DEVICE := k2
 
-PRODUCT_GMS_CLIENTID_BASE := android-xiaomi
+PRODUCT_GMS_CLIENTID_BASE := android-kido
 
 # Build fingerprint
-BUILD_FINGERPRINT="Smartfren/A16C3H/A16C3H:5.1.1/LMY47V/YNC1TBS1ZM:user/release-keys"
+BUILD_FINGERPRINT="Zeusis/kiic/kiic:5.1.1/KIISCN00X1000DPX1709290/buildfarm09291123:user/test-keys"
 
 PRODUCT_BUILD_PROP_OVERRIDES += \
-    PRIVATE_BUILD_DESC="msm8909_x20_g151-user 5.1.1 LMY47V eng.root.20160527.123412 release-keys"
+    PRIVATE_BUILD_DESC="kiic-user 5.1.1 KIISCN00X1000DPX1709290 eng.buildfarm.20170929.112217 test-keys"

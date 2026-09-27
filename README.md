@@ -2,10 +2,10 @@ Copyright (C) 2016 - The CyanogenMod Project
 
 Copyright (C) 2017 - The LineageOS Project
 
-Device configuration for Andromax A / A16C3H (g151)
+Device configuration for KIDO K2/K2S/K2W (Zeusis kiic)
 ========================================================
 
-The Haier Andromax A (codenamed _"g151"_) is a entry-level smartphone from Haier.
+The KIDO K2 (codenamed _"kiic"_) is a entry-level smart watch from Zeusis Technology.
 It was announced on June 2016.
 
 ## Device specifications
@@ -15,16 +15,13 @@ Basic   | Spec Sheet
 SoC     | Qualcomm MSM8909 Snapdragon 210
 CPU     | Quad-core 1.1 GHz ARM® Cortex™ A7
 GPU     | 400MHz Adreno 304
-Memory  | 1 GB RAM
+Memory  | 512 MB RAM
 Shipped Android Version | 5.1.1
-Storage | 8 GB
-MicroSD | Up to 32 GB
-Battery | Removable Li-Ion 1950mAh battery
-Dimensions | 138 x 72 x 9 mm
-Display | 854 x 480 pixels, 4.5 inches (~218 ppi pixel density)
-Rear Camera | 5 MP, autofocus, LED flash
-Front Camera | 5 MP
+Storage | 4 GB
+MicroSD | Unsupported
+Battery | Removable Li-Ion 800mAh battery
+Display | 360 x 360 pixels
 
 ## Device picture
 
-![Andromax A](https://www.begawei.com/wp-content/uploads/2016/06/smartfren-andromax-a-f.jpg "Andromax A in black")
+![KIDO K2](https://img.alicdn.com/imgextra/i3/2921536755/TB2OloZnnTI8KJjSsphXXcFppXa_!!2921536755.jpg_430x430q90.jpg "KIDO K2/K2S/K2W")

@@ -538,7 +538,7 @@
 
     <!-- These are actual sound device specific mixer settings -->
     <path name="adc1">
-        <ctl name="ADC1 Volume" value="6" />
+        <ctl name="ADC1 Volume" value="4" />
         <ctl name="DEC1 MUX" value="ADC1" />
     </path>
 
@@ -554,8 +554,9 @@
     </path>
 
     <path name="speaker">
-        <ctl name="RX3 MIX1 INP1" value="RX1" />
-        <ctl name="SPK DAC Switch" value="1" />
+   	<ctl name="RX3 MIX1 INP1" value="RX1" />
+   	<ctl name="SPK DAC Switch" value="1" />
+	<ctl name="Speaker Boost" value="ENABLE" />
     </path>
 
     <path name="speaker-mic">
@@ -630,6 +631,9 @@
 
     <path name="voice-speaker">
         <path name="speaker" />
+    </path>
+    <!-- krayche add to mute spk -->
+    <path name="speaker_mute">
     </path>
 
     <path name="voice-speaker-mic">

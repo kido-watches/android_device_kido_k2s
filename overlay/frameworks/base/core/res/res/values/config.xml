@@ -17,9 +17,7 @@
  */
  -->
 
-<resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
-
-    <!-- Traffic stats -->
+<resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">    <!-- Traffic stats -->
     <string name="config_datause_iface">rmnet0</string>
 
     <!-- Minimum allowable screen brightness to use in a very dark room.
@@ -102,6 +100,7 @@
          policy/src/com/android/internal/policy/impl/PhoneWindowManager.java
     -->
     <integer name="config_longPressOnHomeBehavior">3</integer>
+    <integer name="config_longPressOnBackBehavior">2</integer>
 
     <!-- Whether to enable auto provisioning the app for new SIM card on boot.-->
     <!--bool name="config_auto_provision_enable">true</bool-->
@@ -113,7 +112,8 @@
          allocations to block waiting on disk I/O or lowmemorykiller.  Overrides the default
          value chosen by ActivityManager based on screen size.  0 prevents keeping any extra
          memory over what the kernel keeps by default.  -1 keeps the default. -->
-    <!--<integer name="config_extraFreeKbytesAbsolute">61440</integer>-->
+    <integer name="config_extraFreeKbytesAbsolute">8192</integer>
+    <integer name="config_lowMemoryKillerMinFreeKbytesAbsolute">49152</integer>
 
     <!-- Config determines whether to update phone object when voice registration
          state changes. Voice radio tech change will always trigger an update of
@@ -218,4 +218,9 @@
         <item>"/data/dalvik-cache/arm/system@product@priv-app@SystemUI@SystemUI.apk@classes.vdex"</item>
         <item>"/system/lib64/libsurfaceflinger.so"</item>
    </string-array>
+
+   <!-- Whether a software navigation bar should be shown. NOTE: in the future this may be
+         autodetected from the Configuration. -->
+   <!--bool name="config_showNavigationBar">true</bool -->
+
 </resources>
